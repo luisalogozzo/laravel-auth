@@ -59,9 +59,11 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        //
+      $post = Post::where('slug', $slug)->first();
+
+      return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -72,7 +74,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+      return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -84,7 +86,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+
+        $post->fill($data);
+        $updated = $post->update();
+
+        if (!$updated) {
+          return redirect()->back()->withInput();
+        }
+
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
