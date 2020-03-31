@@ -8,6 +8,11 @@
      <input class="form-control" type="text" name="title" value="">
      <label for="content">TEXT</label>
      <textarea class="form-control" name="content" rows="8" cols="80"></textarea>
-     <button type="submit" class="btn btn-primary" name="button">INVIO</button>
+
+    @foreach ($tags as $tag)
+      <label for="tag">{{$tag->name}}</label>
+      <input type="checkbox" name="tag[]" value="{{$tag->id}}">
+    @endforeach
+     <button type="submit" class="btn btn-primary" name="">INVIO</button>
    </form>
 @endsection
