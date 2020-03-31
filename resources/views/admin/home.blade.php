@@ -17,6 +17,7 @@
                     You are logged in!
                 </div>
             </div>
+            <a class="btn btn-primary" href="{{route('admin.posts.index')}}">POSTS</a>
         </div>
     </div>
 </div>

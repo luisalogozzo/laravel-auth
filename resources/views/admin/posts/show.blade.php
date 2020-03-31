@@ -9,11 +9,17 @@
 
         <p>{{$post->content}}</p>
 
-        <small>{{$post->updated_at}}</small> <br>
-        <small>{{$post->user->name}}</small> <br>
+        <small>Aggiornato il: {{$post->updated_at}}</small> <br>
+        <small>Autore: {{$post->user->name}}</small> <br>
 
-        <a class="btn btn-primary" href="{{route('admin.posts.edit', $post)}}">EDIT</a>
-        <a class="btn btn-danger" href="{{route('admin.posts.destroy', $post->slug)}}">DELETE</a>
+        <div class="mt-5">
+          <a class="btn btn-primary" href="{{route('admin.posts.edit', $post)}}">EDIT</a>
+          <form class="" action="{{route('admin.posts.destroy', compact('post'))}}" method="post">
+            @csrf
+            @method('DELETE')
+            <input class="btn btn-danger" type="submit" name="" value="DELETE">
+          </form>
+        </div>
 
       </div>
     </div>
