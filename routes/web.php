@@ -18,9 +18,11 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
 
 Auth::routes();
 
+Route::get('/home', 'Admin\HomeController@index')->name('admin.home');
 
 
 Route::name('admin.')
@@ -28,7 +30,6 @@ Route::name('admin.')
 ->namespace('Admin')
 ->middleware('auth')
 ->group(function() {
-    Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('posts','PostController');
 
 });

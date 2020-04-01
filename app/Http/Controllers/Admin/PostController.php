@@ -59,8 +59,8 @@ class PostController extends Controller
         }
 
 
-        $tags = $data['tag'];
-        if (!empty($tags)) {
+        if (!empty($data['tag'])) {
+          $tags = $data['tag'];
           $newPost->tags()->attach($tags);
         }
 
@@ -88,7 +88,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-      return view('admin.posts.edit', compact('post'));
+      $tags = Tag::all();
+
+      $data = [
+        'post' => $post,
+        'tags' => $tags
+      ];
+
+      return view('admin.posts.edit', $data);
     }
 
     /**
@@ -101,13 +108,20 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $data = $request->all();
-
         $post->fill($data);
+
         $updated = $post->update();
 
         if (!$updated) {
           return redirect()->back()->withInput();
         }
+
+        $tags = [];
+        if (!empty($data['tag'])) {
+          $tags = $data['tag'];
+        }
+        $post->tags()->sync($tags);
+
 
         return redirect()->route('admin.posts.show', $post->slug);
     }

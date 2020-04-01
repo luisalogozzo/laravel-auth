@@ -5,12 +5,10 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary mb-3" href="{{route('admin.posts.create')}}">NEW POST</a>
-
         @foreach ($posts as $post)
           <div class="card mt-3">
             <div class="card-header">
-              <a href="{{route('admin.posts.show', $post->slug)}}"><h2 class="card-title">{{$post->title}}</h2></a>
+              <a href="{{route('posts.show', $post->slug)}}"><h2 class="card-title">{{$post->title}}</h2></a>
             </div>
             <div class="card-body">
               <p>{{$post->content}}</p>
