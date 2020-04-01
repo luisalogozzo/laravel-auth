@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Comment;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -14,7 +15,13 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
+
+      if (Auth::user()) {
+        return redirect()->route('admin.posts.index');
+      }
+
         $posts = Post::all();
         $tags = Tag::all();
 
@@ -44,7 +51,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $newComment = new Comment;
+        $newComment->fill($data);
+
+        $saved = $newComment->save();
+
+        if (!$saved) {
+          return redirect()->back()->withInput();
+        }
+
+        $slug = Post::where('id', $data['post_id'])->first()->slug;
+        return redirect()->route('posts.show', $slug);
     }
 
     /**
@@ -56,8 +75,15 @@ class PostController extends Controller
     public function show($slug)
     {
       $post = Post::where('slug', $slug)->first();
+      $comments = Comment::where('post_id', $post->id)->get();
 
-      return view('guests.posts.show', compact('post'));
+      $data = [
+        'post' => $post,
+        'comments' => $comments
+      ];
+
+
+      return view('guests.posts.show', $data);
     }
 
     /**
