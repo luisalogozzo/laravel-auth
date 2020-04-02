@@ -18,7 +18,8 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id')->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
             $table->longText('content');
-            $table->string('slug');
+            $table->string('slug')->unique();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

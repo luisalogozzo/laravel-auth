@@ -26,15 +26,18 @@
         </div>
       </div>
 
+  @if ($post->user_id == Auth::id())
     <section class="btn-edit-delete mt-5">
-          <form class="" action="{{route('admin.posts.destroy', compact('post'))}}" method="post">
-            @csrf
-            @method('DELETE')
-            <a class="btn btn-primary" href="{{route('admin.posts.edit', $post)}}">EDIT</a>
+      <form class="" action="{{route('admin.posts.destroy', compact('post'))}}" method="post">
+        @csrf
+        @method('DELETE')
+        <a class="btn btn-primary" href="{{route('admin.posts.edit', $post)}}">EDIT</a>
 
-            <input class="btn btn-danger" type="submit" name="" value="DELETE">
-          </form>
-        </section>
+        <input class="btn btn-danger" type="submit" name="" value="DELETE">
+      </form>
+    </section>
+  @endif
+
 
     <section class="comment_section mt-5">
       <h4>Comments</h4>
