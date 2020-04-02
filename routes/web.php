@@ -30,5 +30,6 @@ Route::name('admin.')
 ->middleware('auth')
 ->group(function() {
     Route::resource('posts','PostController');
+    Route::resource('comments','CommentController');
 
 });

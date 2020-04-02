@@ -62,7 +62,9 @@
 
              {{-- button delete --}}
               <div class="mb-3 ml-3">
-                <form class="" action="index.html" method="post">
+                <form class="" action="{{route('admin.comments.destroy', $comment->id)}}" method="post">
+                  @csrf
+                  @method('DELETE')
                   <button class="btn btn-danger" type="submit" name="">DELETE</button>
                 </form>
               </div>

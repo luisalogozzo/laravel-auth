@@ -22,7 +22,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::where('user_id', Auth::id())->get();
-        
+
         return view('admin.posts.index', compact('posts'));
 
     }
@@ -78,7 +78,9 @@ class PostController extends Controller
     public function show($slug)
     {
       $post = Post::where('slug', $slug)->first();
+
       $comments = Comment::where('post_id', $post->id)->get();
+
 
       $data = [
         'post' => $post,
